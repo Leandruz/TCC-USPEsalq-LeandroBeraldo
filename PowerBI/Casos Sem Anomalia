@@ -1,0 +1,5 @@
+Casos Sem Anomalia = 
+CALCULATE(
+    COUNTROWS(Sinasc),
+    Sinasc[Caso_Anomalia] = "Sem Anomalia"
+)
