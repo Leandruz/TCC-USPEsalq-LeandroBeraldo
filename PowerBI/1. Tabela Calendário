@@ -1,0 +1,5 @@
+Calendario = 
+VAR StartDate = DATE(2013, 1, 1)
+VAR EndDate = DATE(2022, 12, 31)
+RETURN
+CALENDAR(StartDate, EndDate)
