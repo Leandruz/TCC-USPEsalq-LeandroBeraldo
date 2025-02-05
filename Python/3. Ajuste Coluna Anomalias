@@ -1,6 +1,7 @@
 #Na tabela original, a coluna que informa o CID das Anomalias Congênitas está com os códigos agrupados, o que dificulta a visualização e relacionamento destes no momento de criar o dashboard.
 #Foram utilizadas as bibliotecas: google.cloud.bigquery, Pandas e RE.
 #Por convenção, os dados de CID-10 possuem uma sequência de 1 letra e 2 a 4 números. Por isso, é feito dois momentos de leitura e tratamento dos dados: dados complexos (1 letra e até 4 números) e os demais (dados com 1 letra e 2 números).
+#Além disso, cria colunas separadas (codigo_anomalia_1, codigo_anomalia_2, etc.) para cada código CID extraído. A quantidade máxima de códigos em um único registro define quantas colunas serão criadas.
 
 
 from google.cloud import bigquery
