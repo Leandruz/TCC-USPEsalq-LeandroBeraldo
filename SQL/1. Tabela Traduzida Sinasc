@@ -1,0 +1,408 @@
+#O código abaixo gera uma tabela traduzindo algumas colunas e dados da database original da Sinasc, melhorando a leitura dos dados
+#Até o momento, são mais de 85.559.034 de linhas disponíveis.
+
+WITH 
+dicionario_local_nascimento AS (
+    SELECT
+        chave AS chave_local_nascimento,
+        valor AS descricao_local_nascimento
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'local_nascimento'
+        AND id_tabela = 'microdados'
+),
+dicionario_sexo AS (
+    SELECT
+        chave AS chave_sexo,
+        valor AS descricao_sexo
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'sexo'
+        AND id_tabela = 'microdados'
+),
+dicionario_raca_cor AS (
+    SELECT
+        chave AS chave_raca_cor,
+        valor AS descricao_raca_cor
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'raca_cor'
+        AND id_tabela = 'microdados'
+),
+dicionario_id_anomalia AS (
+    SELECT
+        chave AS chave_id_anomalia,
+        valor AS descricao_id_anomalia
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'id_anomalia'
+        AND id_tabela = 'microdados'
+),
+dicionario_semana_gestacao_estimada AS (
+    SELECT
+        chave AS chave_semana_gestacao_estimada,
+        valor AS descricao_semana_gestacao_estimada
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'semana_gestacao_estimada'
+        AND id_tabela = 'microdados'
+),
+dicionario_gestacao_agr AS (
+    SELECT
+        chave AS chave_gestacao_agr,
+        valor AS descricao_gestacao_agr
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'gestacao_agr'
+        AND id_tabela = 'microdados'
+),
+dicionario_tipo_gravidez AS (
+    SELECT
+        chave AS chave_tipo_gravidez,
+        valor AS descricao_tipo_gravidez
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'tipo_gravidez'
+        AND id_tabela = 'microdados'
+),
+dicionario_tipo_parto AS (
+    SELECT
+        chave AS chave_tipo_parto,
+        valor AS descricao_tipo_parto
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'tipo_parto'
+        AND id_tabela = 'microdados'
+),
+dicionario_inicio_pre_natal AS (
+    SELECT
+        chave AS chave_inicio_pre_natal,
+        valor AS descricao_inicio_pre_natal
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'inicio_pre_natal'
+        AND id_tabela = 'microdados'
+),
+dicionario_pre_natal_agr AS (
+    SELECT
+        chave AS chave_pre_natal_agr,
+        valor AS descricao_pre_natal_agr
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'pre_natal_agr'
+        AND id_tabela = 'microdados'
+),
+dicionario_classificacao_pre_natal AS (
+    SELECT
+        chave AS chave_classificacao_pre_natal,
+        valor AS descricao_classificacao_pre_natal
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'classificacao_pre_natal'
+        AND id_tabela = 'microdados'
+),
+dicionario_id_pais_mae AS (
+    SELECT
+        chave AS chave_id_pais_mae,
+        valor AS descricao_id_pais_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'id_pais_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_escolaridade_mae AS (
+    SELECT
+        chave AS chave_escolaridade_mae,
+        valor AS descricao_escolaridade_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'escolaridade_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_serie_escolar_mae AS (
+    SELECT
+        chave AS chave_serie_escolar_mae,
+        valor AS descricao_serie_escolar_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'serie_escolar_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_escolaridade_2010_mae AS (
+    SELECT
+        chave AS chave_escolaridade_2010_mae,
+        valor AS descricao_escolaridade_2010_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'escolaridade_2010_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_escolaridade_2010_agr_mae AS (
+    SELECT
+        chave AS chave_escolaridade_2010_agr_mae,
+        valor AS descricao_escolaridade_2010_agr_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'escolaridade_2010_agr_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_estado_civil_mae AS (
+    SELECT
+        chave AS chave_estado_civil_mae,
+        valor AS descricao_estado_civil_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'estado_civil_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_raca_cor_mae AS (
+    SELECT
+        chave AS chave_raca_cor_mae,
+        valor AS descricao_raca_cor_mae
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'raca_cor_mae'
+        AND id_tabela = 'microdados'
+),
+dicionario_tipo_apresentacao AS (
+    SELECT
+        chave AS chave_tipo_apresentacao,
+        valor AS descricao_tipo_apresentacao
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'tipo_apresentacao'
+        AND id_tabela = 'microdados'
+),
+dicionario_inducao_parto AS (
+    SELECT
+        chave AS chave_inducao_parto,
+        valor AS descricao_inducao_parto
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'inducao_parto'
+        AND id_tabela = 'microdados'
+),
+dicionario_cesarea_antes_parto AS (
+    SELECT
+        chave AS chave_cesarea_antes_parto,
+        valor AS descricao_cesarea_antes_parto
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'cesarea_antes_parto'
+        AND id_tabela = 'microdados'
+),
+dicionario_tipo_robson AS (
+    SELECT
+        chave AS chave_tipo_robson,
+        valor AS descricao_tipo_robson
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'tipo_robson'
+        AND id_tabela = 'microdados'
+),
+dicionario_funcao_responsavel AS (
+    SELECT
+        chave AS chave_funcao_responsavel,
+        valor AS descricao_funcao_responsavel
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'funcao_responsavel'
+        AND id_tabela = 'microdados'
+),
+dicionario_documento_responsavel AS (
+    SELECT
+        chave AS chave_documento_responsavel,
+        valor AS descricao_documento_responsavel
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'documento_responsavel'
+        AND id_tabela = 'microdados'
+),
+dicionario_status_dn AS (
+    SELECT
+        chave AS chave_status_dn,
+        valor AS descricao_status_dn
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'status_dn'
+        AND id_tabela = 'microdados'
+),
+dicionario_status_dn_nova AS (
+    SELECT
+        chave AS chave_status_dn_nova,
+        valor AS descricao_status_dn_nova
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'status_dn_nova'
+        AND id_tabela = 'microdados'
+),
+dicionario_paridade AS (
+    SELECT
+        chave AS chave_paridade,
+        valor AS descricao_paridade
+    FROM `basedosdados.br_ms_sinasc.dicionario`
+    WHERE
+        TRUE
+        AND nome_coluna = 'paridade'
+        AND id_tabela = 'microdados'
+)
+SELECT
+    dados.ano as ano,
+    dados.sigla_uf AS sigla_uf,
+    diretorio_sigla_uf.nome AS sigla_uf_nome,
+    dados.sequencial_nascimento as sequencial_nascimento,
+    dados.id_municipio_nascimento AS id_municipio_nascimento,
+    diretorio_id_municipio_nascimento.nome AS id_municipio_nascimento_nome,
+    descricao_local_nascimento AS local_nascimento,
+    dados.codigo_estabelecimento as codigo_estabelecimento,
+    dados.data_nascimento as data_nascimento,
+    dados.hora_nascimento as hora_nascimento,
+    descricao_sexo AS sexo,
+    dados.peso as peso,
+    descricao_raca_cor AS raca_cor,
+    dados.apgar1 as apgar1,
+    dados.apgar5 as apgar5,
+    descricao_id_anomalia AS id_anomalia,
+    dados.codigo_anomalia as codigo_anomalia,
+    dados.semana_gestacao as semana_gestacao,
+    descricao_semana_gestacao_estimada AS semana_gestacao_estimada,
+    descricao_gestacao_agr AS gestacao_agr,
+    descricao_tipo_gravidez AS tipo_gravidez,
+    descricao_tipo_parto AS tipo_parto,
+    descricao_inicio_pre_natal AS inicio_pre_natal,
+    dados.pre_natal as pre_natal,
+    descricao_pre_natal_agr AS pre_natal_agr,
+    descricao_classificacao_pre_natal AS classificacao_pre_natal,
+    dados.quantidade_filhos_vivos as quantidade_filhos_vivos,
+    dados.quantidade_filhos_mortos as quantidade_filhos_mortos,
+    descricao_id_pais_mae AS id_pais_mae,
+    dados.id_uf_mae as id_uf_mae,
+    dados.id_municipio_mae AS id_municipio_mae,
+    diretorio_id_municipio_mae.nome AS id_municipio_mae_nome,
+    dados.id_pais_residencia as id_pais_residencia,
+    dados.id_municipio_residencia AS id_municipio_residencia,
+    diretorio_id_municipio_residencia.nome AS id_municipio_residencia_nome,
+    dados.data_nascimento_mae as data_nascimento_mae,
+    dados.idade_mae as idade_mae,
+    descricao_escolaridade_mae AS escolaridade_mae,
+    descricao_serie_escolar_mae AS serie_escolar_mae,
+    descricao_escolaridade_2010_mae AS escolaridade_2010_mae,
+    descricao_escolaridade_2010_agr_mae AS escolaridade_2010_agr_mae,
+    descricao_estado_civil_mae AS estado_civil_mae,
+    dados.ocupacao_mae as ocupacao_mae,
+    descricao_raca_cor_mae AS raca_cor_mae,
+    dados.gestacoes_ant as gestacoes_ant,
+    dados.quantidade_parto_normal as quantidade_parto_normal,
+    dados.quantidade_parto_cesareo as quantidade_parto_cesareo,
+    dados.data_ultima_menstruacao as data_ultima_menstruacao,
+    descricao_tipo_apresentacao AS tipo_apresentacao,
+    descricao_inducao_parto AS inducao_parto,
+    descricao_cesarea_antes_parto AS cesarea_antes_parto,
+    descricao_tipo_robson AS tipo_robson,
+    dados.idade_pai as idade_pai,
+    dados.cartorio as cartorio,
+    dados.registro_cartorio as registro_cartorio,
+    dados.data_registro_cartorio as data_registro_cartorio,
+    dados.origem as origem,
+    dados.numero_lote as numero_lote,
+    dados.versao_sistema as versao_sistema,
+    dados.data_cadastro as data_cadastro,
+    dados.data_recebimento as data_recebimento,
+    dados.data_recebimento_original as data_recebimento_original,
+    dados.diferenca_data as diferenca_data,
+    dados.data_declaracao as data_declaracao,
+    descricao_funcao_responsavel AS funcao_responsavel,
+    descricao_documento_responsavel AS documento_responsavel,
+    dados.formacao_profissional_responsavel as formacao_profissional_responsavel,
+    descricao_status_dn AS status_dn,
+    descricao_status_dn_nova AS status_dn_nova,
+    descricao_paridade AS paridade
+FROM `basedosdados.br_ms_sinasc.microdados` AS dados
+LEFT JOIN (SELECT DISTINCT sigla,nome  FROM `basedosdados.br_bd_diretorios_brasil.uf`) AS diretorio_sigla_uf
+    ON dados.sigla_uf = diretorio_sigla_uf.sigla
+LEFT JOIN (SELECT DISTINCT id_municipio,nome  FROM `basedosdados.br_bd_diretorios_brasil.municipio`) AS diretorio_id_municipio_nascimento
+    ON dados.id_municipio_nascimento = diretorio_id_municipio_nascimento.id_municipio
+LEFT JOIN `dicionario_local_nascimento`
+    ON dados.local_nascimento = chave_local_nascimento
+LEFT JOIN `dicionario_sexo`
+    ON dados.sexo = chave_sexo
+LEFT JOIN `dicionario_raca_cor`
+    ON dados.raca_cor = chave_raca_cor
+LEFT JOIN `dicionario_id_anomalia`
+    ON dados.id_anomalia = chave_id_anomalia
+LEFT JOIN `dicionario_semana_gestacao_estimada`
+    ON dados.semana_gestacao_estimada = chave_semana_gestacao_estimada
+LEFT JOIN `dicionario_gestacao_agr`
+    ON dados.gestacao_agr = chave_gestacao_agr
+LEFT JOIN `dicionario_tipo_gravidez`
+    ON dados.tipo_gravidez = chave_tipo_gravidez
+LEFT JOIN `dicionario_tipo_parto`
+    ON dados.tipo_parto = chave_tipo_parto
+LEFT JOIN `dicionario_inicio_pre_natal`
+    ON dados.inicio_pre_natal = chave_inicio_pre_natal
+LEFT JOIN `dicionario_pre_natal_agr`
+    ON dados.pre_natal_agr = chave_pre_natal_agr
+LEFT JOIN `dicionario_classificacao_pre_natal`
+    ON dados.classificacao_pre_natal = chave_classificacao_pre_natal
+LEFT JOIN `dicionario_id_pais_mae`
+    ON dados.id_pais_mae = chave_id_pais_mae
+LEFT JOIN (SELECT DISTINCT id_municipio,nome  FROM `basedosdados.br_bd_diretorios_brasil.municipio`) AS diretorio_id_municipio_mae
+    ON dados.id_municipio_mae = diretorio_id_municipio_mae.id_municipio
+LEFT JOIN (SELECT DISTINCT id_municipio,nome  FROM `basedosdados.br_bd_diretorios_brasil.municipio`) AS diretorio_id_municipio_residencia
+    ON dados.id_municipio_residencia = diretorio_id_municipio_residencia.id_municipio
+LEFT JOIN `dicionario_escolaridade_mae`
+    ON dados.escolaridade_mae = chave_escolaridade_mae
+LEFT JOIN `dicionario_serie_escolar_mae`
+    ON dados.serie_escolar_mae = chave_serie_escolar_mae
+LEFT JOIN `dicionario_escolaridade_2010_mae`
+    ON dados.escolaridade_2010_mae = chave_escolaridade_2010_mae
+LEFT JOIN `dicionario_escolaridade_2010_agr_mae`
+    ON dados.escolaridade_2010_agr_mae = chave_escolaridade_2010_agr_mae
+LEFT JOIN `dicionario_estado_civil_mae`
+    ON dados.estado_civil_mae = chave_estado_civil_mae
+LEFT JOIN `dicionario_raca_cor_mae`
+    ON dados.raca_cor_mae = chave_raca_cor_mae
+LEFT JOIN `dicionario_tipo_apresentacao`
+    ON dados.tipo_apresentacao = chave_tipo_apresentacao
+LEFT JOIN `dicionario_inducao_parto`
+    ON dados.inducao_parto = chave_inducao_parto
+LEFT JOIN `dicionario_cesarea_antes_parto`
+    ON dados.cesarea_antes_parto = chave_cesarea_antes_parto
+LEFT JOIN `dicionario_tipo_robson`
+    ON dados.tipo_robson = chave_tipo_robson
+LEFT JOIN `dicionario_funcao_responsavel`
+    ON dados.funcao_responsavel = chave_funcao_responsavel
+LEFT JOIN `dicionario_documento_responsavel`
+    ON dados.documento_responsavel = chave_documento_responsavel
+LEFT JOIN `dicionario_status_dn`
+    ON dados.status_dn = chave_status_dn
+LEFT JOIN `dicionario_status_dn_nova`
+    ON dados.status_dn_nova = chave_status_dn_nova
+LEFT JOIN `dicionario_paridade`
+    ON dados.paridade = chave_paridade
