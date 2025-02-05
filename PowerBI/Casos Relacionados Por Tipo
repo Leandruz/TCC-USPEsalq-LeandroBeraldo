@@ -1,0 +1,18 @@
+Casos Relacionados Por Tipo = 
+SUMX(
+    FILTER(
+        Sinasc,
+        LEFT(Sinasc[codigo_anomalia_1], 3) IN SELECTCOLUMNS(dic_anomalias_prioritarias, "codigo_cid", LEFT(dic_anomalias_prioritarias[codigo_cid], 3)) ||
+        LEFT(Sinasc[codigo_anomalia_2], 3) IN SELECTCOLUMNS(dic_anomalias_prioritarias, "codigo_cid", LEFT(dic_anomalias_prioritarias[codigo_cid], 3)) ||
+        LEFT(Sinasc[codigo_anomalia_3], 3) IN SELECTCOLUMNS(dic_anomalias_prioritarias, "codigo_cid", LEFT(dic_anomalias_prioritarias[codigo_cid], 3)) ||
+        LEFT(Sinasc[codigo_anomalia_4], 3) IN SELECTCOLUMNS(dic_anomalias_prioritarias, "codigo_cid", LEFT(dic_anomalias_prioritarias[codigo_cid], 3)) ||
+        LEFT(Sinasc[codigo_anomalia_5], 3) IN SELECTCOLUMNS(dic_anomalias_prioritarias, "codigo_cid", LEFT(dic_anomalias_prioritarias[codigo_cid], 3))
+    ),
+    SWITCH(
+        Sinasc[Caso_Anomalia],
+        "Multipla", 1,
+        "Isolada", 1,
+        "Sem Anomalia", BLANK(),
+        0
+    )
+)
