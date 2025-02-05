@@ -1,7 +1,7 @@
 #O código abaixo cria uma tabela auxiliar, chamada anomalias_congenitas_prioritarias, categorizando os CID prioritários para o Ministério da Saúde.
 #O objetivo é trazer para a análise final uma visualização atrelada as necessidades e recomendações do Ministério da Saúde.
 
-CREATE OR REPLACE TABLE `tcc-usp-445616.sinasc.anomalias_congenitas_prioritarias` AS
+CREATE OR REPLACE TABLE `tcc-usp-445616.sinasc.dic_anomalias_prioritarias` AS
 SELECT
   'Q000' AS codigo_cid,
   'Defeitos de tubo neural' AS grupo,
