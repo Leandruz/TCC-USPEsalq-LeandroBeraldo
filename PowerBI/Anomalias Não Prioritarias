@@ -1,0 +1,5 @@
+Anomalias Não Prioritarias = 
+CALCULATE(
+    COUNTROWS(Sinasc),
+    Sinasc[Anomalia_Prioritaria] = "Nao"
+)
