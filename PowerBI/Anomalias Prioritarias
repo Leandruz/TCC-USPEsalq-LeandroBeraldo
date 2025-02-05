@@ -1,0 +1,5 @@
+Anomalias Prioritarias = 
+CALCULATE(
+    COUNTROWS(Sinasc),
+    Sinasc[Anomalia_Prioritaria] = "Sim"
+)
