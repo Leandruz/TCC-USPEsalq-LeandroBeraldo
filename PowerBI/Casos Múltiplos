@@ -1,0 +1,5 @@
+Casos Múltiplos = 
+CALCULATE(
+    COUNTROWS(Sinasc),
+    Sinasc[Caso_Anomalia] = "Multipla"
+)
