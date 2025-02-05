@@ -1,0 +1,5 @@
+Casos Isolados = 
+CALCULATE(
+    COUNTROWS(Sinasc),
+    Sinasc[Caso_Anomalia] = "Isolada"
+)
