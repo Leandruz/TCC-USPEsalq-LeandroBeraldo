@@ -1,0 +1,64 @@
+#O código abaixo cria uma tabela auxiliar, chamada anomalias_congenitas_prioritarias, categorizando os CID prioritários para o Ministério da Saúde.
+#O objetivo é trazer para a análise final uma visualização atrelada as necessidades e recomendações do Ministério da Saúde.
+
+CREATE OR REPLACE TABLE `tcc-usp-445616.sinasc.anomalias_congenitas_prioritarias` AS
+SELECT
+  'Q000' AS codigo_cid,
+  'Defeitos de tubo neural' AS grupo,
+  'Anencefalia' AS descricao
+UNION ALL SELECT
+  'Q001', 'Defeitos de tubo neural', 'Craniorraquisquise'
+UNION ALL SELECT
+  'Q002', 'Defeitos de tubo neural', 'Iniencefalia'
+UNION ALL SELECT
+  'Q01', 'Defeitos de tubo neural', 'Encefalocele'
+UNION ALL SELECT
+  'Q05', 'Defeitos de tubo neural', 'Espinha bífida'
+UNION ALL SELECT
+  'Q02', 'Microcefalia', 'Microcefalia'
+UNION ALL SELECT
+  'Q20', 'Cardiopatias congênitas', 'Malformações congênitas das câmaras e das comunicações cardíacas'
+UNION ALL SELECT
+  'Q21', 'Cardiopatias congênitas', 'Malformações congênitas dos septos cardíacos'
+UNION ALL SELECT
+  'Q22', 'Cardiopatias congênitas', 'Malformações congênitas das valvas pulmonar e tricúspide'
+UNION ALL SELECT
+  'Q23', 'Cardiopatias congênitas', 'Malformações congênitas das valvas aórtica e mitral'
+UNION ALL SELECT
+  'Q24', 'Cardiopatias congênitas', 'Outras malformações congênitas do coração'
+UNION ALL SELECT
+  'Q25', 'Cardiopatias congênitas', 'Malformações congênitas das grandes artérias'
+UNION ALL SELECT
+  'Q26', 'Cardiopatias congênitas', 'Malformações congênitas das grandes veias'
+UNION ALL SELECT
+  'Q27', 'Cardiopatias congênitas', 'Outras malformações congênitas do sistema vascular periférico'
+UNION ALL SELECT
+  'Q28', 'Cardiopatias congênitas', 'Outras malformações congênitas do aparelho circulatório'
+UNION ALL SELECT
+  'Q35', 'Fendas orais', 'Fenda palatina'
+UNION ALL SELECT
+  'Q36', 'Fendas orais', 'Fenda labial'
+UNION ALL SELECT
+  'Q37', 'Fendas orais', 'Fenda labial com fenda palatina'
+UNION ALL SELECT
+  'Q54', 'Defeitos de órgãos genitais', 'Hipospádia'
+UNION ALL SELECT
+  'Q56', 'Defeitos de órgãos genitais', 'Sexo indeterminado e pseudo-hermafroditismo'
+UNION ALL SELECT
+  'Q66', 'Defeitos de membros', 'Deformidades congênitas do pé'
+UNION ALL SELECT
+  'Q69', 'Defeitos de membros', 'Polidactilia'
+UNION ALL SELECT
+  'Q71', 'Defeitos de membros', 'Defeitos, por redução, do membro superior'
+UNION ALL SELECT
+  'Q72', 'Defeitos de membros', 'Defeitos, por redução, do membro inferior'
+UNION ALL SELECT
+  'Q73', 'Defeitos de membros', 'Defeitos por redução de membro não especificado'
+UNION ALL SELECT
+  'Q743', 'Defeitos de membros', 'Artrogripose congênita múltipla'
+UNION ALL SELECT
+  'Q792', 'Defeitos de parede abdominal', 'Exonfalia'
+UNION ALL SELECT
+  'Q793', 'Defeitos de parede abdominal', 'Gastrosquise'
+UNION ALL SELECT
+  'Q90', 'Síndrome de Down', 'Síndrome de Down';
