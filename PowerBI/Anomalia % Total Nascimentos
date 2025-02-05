@@ -1,0 +1,1 @@
+Anomalia % Total Nascimentos = DIVIDE([Total Anomalia], ([Total Anomalia] + [Casos Sem Anomalia]))
