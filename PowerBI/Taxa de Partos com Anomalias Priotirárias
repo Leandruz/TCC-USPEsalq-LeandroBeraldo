@@ -1,0 +1,6 @@
+Taxa de Partos com Anomalias Priotirárias = 
+DIVIDE(
+    [Anomalias Prioritarias], 
+    [Total Partos], 
+    1
+) * 10000
