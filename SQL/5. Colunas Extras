@@ -1,0 +1,52 @@
+#O código abaixo cria 3 novas colunas que ajudam a identificar o volume de anomalias por parto, se é parto com múltipla, isolada ou sem anomalias e, por fim, se é ou não uma Anomalia Prioritária.
+
+CREATE OR REPLACE TABLE `tcc-usp-445616.sinasc.SINASC_PR_2013_2022_Ajustada` AS
+WITH caso_anomalia_calculado AS (
+  SELECT
+    *,
+    ## Calcula o Volume de Anomalias
+    CASE
+      WHEN codigo_anomalia_1 IS NOT NULL THEN 1 ELSE 0
+    END +
+    CASE
+      WHEN codigo_anomalia_2 IS NOT NULL THEN 1 ELSE 0
+    END +
+    CASE
+      WHEN codigo_anomalia_3 IS NOT NULL THEN 1 ELSE 0
+    END +
+    CASE
+      WHEN codigo_anomalia_4 IS NOT NULL THEN 1 ELSE 0
+    END +
+    CASE
+      WHEN codigo_anomalia_5 IS NOT NULL THEN 1 ELSE 0
+    END AS Volume_Anomalias,
+
+    ## Determina o tipo de cluster de anomalias
+    CASE
+      WHEN
+        (codigo_anomalia_1 IS NOT NULL AND
+        (codigo_anomalia_2 IS NOT NULL OR codigo_anomalia_3 IS NOT NULL OR 
+         codigo_anomalia_4 IS NOT NULL OR codigo_anomalia_5 IS NOT NULL)) THEN "Multipla"
+      WHEN codigo_anomalia_1 IS NOT NULL AND
+           codigo_anomalia_2 IS NULL AND
+           codigo_anomalia_3 IS NULL AND
+           codigo_anomalia_4 IS NULL AND
+           codigo_anomalia_5 IS NULL THEN "Isolada"
+      ELSE "Sem Anomalia"
+    END AS Caso_Anomalia
+  FROM `tcc-usp-445616.sinasc.SINASC_PR_2013_2022_processada`
+)
+SELECT
+  *,
+  ## Adiciona a coluna Anomalia_Prioritaria
+  CASE
+    WHEN Caso_Anomalia = "Sem Anomalia" THEN "Sem Anomalia"
+    WHEN SUBSTR(codigo_anomalia_1, 1, 3) IN (SELECT DISTINCT SUBSTR(codigo_cid, 1, 3) FROM `tcc-usp-445616.sinasc.dic_anomalias_prioritarias`)
+      OR SUBSTR(codigo_anomalia_2, 1, 3) IN (SELECT DISTINCT SUBSTR(codigo_cid, 1, 3) FROM `tcc-usp-445616.sinasc.dic_anomalias_prioritarias`)
+      OR SUBSTR(codigo_anomalia_3, 1, 3) IN (SELECT DISTINCT SUBSTR(codigo_cid, 1, 3) FROM `tcc-usp-445616.sinasc.dic_anomalias_prioritarias`)
+      OR SUBSTR(codigo_anomalia_4, 1, 3) IN (SELECT DISTINCT SUBSTR(codigo_cid, 1, 3) FROM `tcc-usp-445616.sinasc.dic_anomalias_prioritarias`)
+      OR SUBSTR(codigo_anomalia_5, 1, 3) IN (SELECT DISTINCT SUBSTR(codigo_cid, 1, 3) FROM `tcc-usp-445616.sinasc.dic_anomalias_prioritarias`)
+    THEN "Sim"
+    ELSE "Nao"
+  END AS Anomalia_Prioritaria
+FROM caso_anomalia_calculado
