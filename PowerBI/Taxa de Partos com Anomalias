@@ -1,0 +1,5 @@
+Taxa de Partos com Anomalias = DIVIDE(
+    [Total Anomalia],
+    [Total Partos],
+    0
+) * 10000
