@@ -1,0 +1,47 @@
+#O código abaixo seleciona as colunas utilizadas no trabalho, além de renomear algumas delas.
+#Também é feita a filtragem do período de 2014 a 2023, assim como apenas os dados do estado do Paraná através da UF
+
+SELECT 
+
+ano,
+sigla_uf,
+id_municipio_nascimento_nome AS cidade_nascimento,
+data_nascimento,
+hora_nascimento,
+sexo,
+peso,
+raca_cor,
+apgar1,
+apgar5,
+id_anomalia AS anomalia,
+codigo_anomalia,
+semana_gestacao,
+semana_gestacao_estimada AS metodo_gestacao_estimada,
+gestacao_agr AS gestacao_estimada,
+tipo_gravidez,
+tipo_parto,
+inicio_pre_natal,
+pre_natal,
+pre_natal_agr,
+classificacao_pre_natal,
+quantidade_filhos_vivos,
+quantidade_filhos_mortos,
+id_municipio_residencia_nome as cidade_residencia,
+idade_mae,
+escolaridade_mae,
+serie_escolar_mae,
+escolaridade_2010_mae,
+escolaridade_2010_agr_mae,
+estado_civil_mae,
+ocupacao_mae,
+raca_cor_mae,
+gestacoes_ant,
+quantidade_parto_normal,
+quantidade_parto_cesareo,
+tipo_apresentacao AS apresentacao_fetal,
+inducao_parto,
+idade_pai
+
+FROM `tcc-usp-445616.sinasc.sinasc_traduzida`
+WHERE Ano BETWEEN 2014 AND 2023
+  AND sigla_uf = 'PR';
