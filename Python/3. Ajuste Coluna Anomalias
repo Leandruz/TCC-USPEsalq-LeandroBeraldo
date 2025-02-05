@@ -1,0 +1,56 @@
+#Na tabela original, a coluna que informa o CID das Anomalias Congênitas está com os códigos agrupados, o que dificulta a visualização e relacionamento destes no momento de criar o dashboard.
+#Foram utilizadas as bibliotecas: google.cloud.bigquery, Pandas e RE.
+#Por convenção, os dados de CID-10 possuem uma sequência de 1 letra e 2 a 4 números. Por isso, é feito dois momentos de leitura e tratamento dos dados: dados complexos (1 letra e até 4 números) e os demais (dados com 1 letra e 2 números).
+
+
+from google.cloud import bigquery
+import pandas as pd
+import re
+
+client = bigquery.Client()
+
+query = """
+SELECT *
+FROM `tcc-usp-445616.sinasc.SINASC_PR_2013_2022`
+"""
+df = client.query(query).to_dataframe()
+
+def separar_cid(codigo_anomalia):
+    if pd.isna(codigo_anomalia):
+        return []
+
+    # Extrai os códigos no formato inicial
+    codigos = re.findall(r'[A-Z]\d{2,4}', codigo_anomalia)
+
+    # Ajusta os códigos para o formato de saída: "Q90.1"
+    codigos_ajustados = []
+    for codigo in codigos:
+
+            # Formato "Q901"
+        if len(codigo) == 4:  
+            codigos_ajustados.append(f"{codigo[:3]}.{codigo[3]}")
+
+        else:  
+
+            # Formato "Q90" (sem ajustes)
+            codigos_ajustados.append(codigo)
+    return codigos_ajustados
+
+df_cids = df.copy()
+df_cids['cids_separados'] = df_cids['codigo_anomalia'].apply(separar_cid)
+
+max_cids = df_cids['cids_separados'].map(len).max()
+for i in range(max_cids):
+    df_cids[f'codigo_anomalia_{i+1}'] = df_cids['cids_separados'].apply(lambda x: x[i] if i < len(x) else None)
+
+df_cids.drop(columns=['cids_separados'], inplace=True)
+
+table_id = "tcc-usp-445616.sinasc.SINASC_PR_2013_2022_processada"
+
+job_config = bigquery.LoadJobConfig(
+    write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE
+)
+job = client.load_table_from_dataframe(df_cids, table_id, job_config=job_config)
+job.result()
+
+print(f"Os dados processados foram salvos na tabela {table_id}.")
