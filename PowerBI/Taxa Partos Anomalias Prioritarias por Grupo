@@ -1,0 +1,6 @@
+Taxa Partos Anomalias Prioritarias por Grupo = 
+DIVIDE(
+    [Casos Relacionados Por Tipo], 
+    CALCULATE([Total Partos], ALL(Sinasc)), 
+    1
+) * 10000
